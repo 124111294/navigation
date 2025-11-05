@@ -1,0 +1,238 @@
+{
+    "网站服务": [
+        {
+            "name": "博客",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-brands fa-blogger"
+        },
+        {
+            "name": "云盘",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-brands fa-cloudflare"
+        },
+        {
+            "name": "状态",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-chart-column"
+        },
+        {
+            "name": "Jellyfin",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-film"
+        },
+        {
+            "name": "IP地址检测",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-globe"
+        },
+        {
+            "name": "IPV6测试",
+            "url": "https://v6test.ipgg.cn/",
+            "icon": "fa-solid fa-sliders"
+        },
+        {
+            "name": "工具",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-screwdriver-wrench"
+        },
+        {
+            "name": "SSH",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-terminal"
+        },
+        {
+            "name": "搜索",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-magnifying-glass"
+        },
+        {
+            "name": "图床",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-brands fa-cloudflare"
+        },
+        {
+            "name": "文件快递柜",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-file-arrow-up"
+        },
+        {
+            "name": "HomeAssistant",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-house"
+        },
+        {
+            "name": "远程浏览器",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-globe"
+        },
+        {
+            "name": "Tcping节点",
+            "url": "https://tcping.wuxie.de/",
+            "icon": "fa-solid fa-network-wired"
+        },
+        {
+            "name": "剩余价值计算",
+            "url": "https://surplus.wuxie.de/",
+            "icon": "fa-solid fa-coins"
+        },
+        {
+            "name": "流量消耗",
+            "url": "https://use.wuxie.de/",
+            "icon": "fa-solid fa-tachometer-alt"
+        },
+        {
+            "name": "Wallos",
+            "url": "https://wallos.wuxie.de/",
+            "icon": "fa-brands fa-windows"
+        },
+        {
+            "name": "人工智能",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-robot"
+        },
+        {
+            "name": "比特彗星",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-bitcoin-sign"
+        },
+        {
+            "name": "Vertex",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-bitcoin-sign"
+        },
+        {
+            "name": "服务监控",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-server"
+        },
+        {
+            "name": "PDF工具",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-file-pdf"
+        },
+        {
+            "name": "2FA工具",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-key"
+        },
+        {
+            "name": "恋爱主页",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-flag"
+        },
+        {
+            "name": "网站统计",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-chart-line"
+        },
+        {
+            "name": "摄影作品",
+            "url": "https://tuchong.com/28030584/",
+            "icon": "fa-solid fa-camera-retro"
+        }
+    ],
+    "穿透服务": [
+        {
+            "name": "OpenWrt",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-network-wired"
+        },
+        {
+            "name": "云盘",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-cloud"
+        },
+        {
+            "name": "影 视 库 ",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-film"
+        },
+        {
+            "name": "Aria2",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-download"
+        },
+        {
+            "name": "青龙面板",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-list-check"
+        },
+        {
+            "name": "PVE管理",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-server"
+        },
+        {
+            "name": "Docker管理",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-brands fa-docker"
+        },
+        {
+            "name": "服务监控",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-heart-pulse"
+        },
+        {
+            "name": "原神",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-screwdriver-wrench"
+        },
+        {
+            "name": "家居智能",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-house"
+        }
+    ],
+    "内网服务": [
+        {
+            "name": "OpenWrt",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-network-wired"
+        },
+        {
+            "name": "云盘",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-cloud"
+        },
+        {
+            "name": "影视库",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-film"
+        },
+        {
+            "name": "Aria2",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-download"
+        },
+        {
+            "name": "青龙面板",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-list-check"
+        },
+        {
+            "name": "PVE管理",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-server"
+        },
+        {
+            "name": "Docker管理",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-brands fa-docker"
+        },
+        {
+            "name": "服务监控",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-heart-pulse"
+        },
+        {
+            "name": "原神",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-screwdriver-wrench"
+        },
+        {
+            "name": "家居智能",
+            "url": "https://ipgg.cn/",
+            "icon": "fa-solid fa-house"
+        }
+    ]
+}
