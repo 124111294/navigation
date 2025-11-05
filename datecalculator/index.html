@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日期计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .calendar {
+            width: 600px;
+            margin: 20px auto;
+        }
+
+        .calendar th,
+        .calendar td {
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .calendar th {
+            background-color: #f2f2f2;
+        }
+
+        .calendar td {
+            border: 1px solid #ddd;
+        }
+
+        .gray {
+            background-color: #f2f2f2;
+        }
+
+        .context-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .context-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .context-menu ul li {
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .context-menu ul li:hover {
+            background-color: #f1f1f1;
+        }
+
+        .highlight {
+            background-color: #ffff99;
+        }
+
+        .start {
+            background-color: green;
+        }
+
+        .leave {
+            background-color: yellow;
+        }
+
+        .end {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+<div>
+    <label for="monthSelect">选择月份:</label>
+    <select id="monthSelect">
+        <option value="0">1月</option>
+        <option value="1">2月</option>
+        <option value="2">3月</option>
+        <option value="3">4月</option>
+        <option value="4">5月</option>
+        <option value="5">6月</option>
+        <option value="6">7月</option>
+        <option value="7">8月</option>
+        <option value="8">9月</option>
+        <option value="9">10月</option>
+        <option value="10">11月</option>
+        <option value="11">12月</option>
+        <option value="12">去年12月</option>
+    </select>
+    <button onclick="generateCalendar()">显示日历</button>
+</div>
+
+<div class="calendar" id="calendar">
+    <!-- 日历将通过JavaScript动态生成 -->
+</div>
+
+<div class="context-menu" id="contextMenu">
+    <ul>
+        <li data-action="start">开始</li>
+        <li data-action="leave">请假</li>
+        <li data-action="unleave">取消请假</li>
+    </ul>
+</div>
+<div id="days">
+    <!-- 日历将通过JavaScript动态生成 -->
+</div>
+<script>
+    function setOrGet(key, obj) {
+        if (obj) {
+            localStorage.setItem(key, JSON.stringify(obj));
+        } else {
+            obj = localStorage.getItem(key);
+            if (obj) {
+                return JSON.parse(obj);
+            }
+            return null;
+        }
+    }
+
+    function saveStartDate(date) {
+        startDate = date;
+        localStorage.setItem('startDate', formatDate(date));
+    }
+
+    function loadStartDate() {
+        let date = localStorage.getItem('startDate');
+        if (date) {
+            return new Date(date);
+        }
+        return null;
+    }
+
+    function changeLeaves(day, isDel) {
+        if (isDel) {
+            delete leaves[day]
+        } else {
+            leaves[day] = 1;
+        }
+        setOrGet('leaves', leaves);
+    }
+
+    let startDate = loadStartDate();
+    let leaves = setOrGet('leaves') || {};
+    let menuClick = null;
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    document.getElementById('monthSelect').selectedIndex = currentMonth - 1;
+
+    function generateCalendar() {
+        let month = document.getElementById('monthSelect').value;
+        let year = currentYear;
+        if (month == '12') {
+            month = '11';
+            year = year - 1;
+        }
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month - 0 + 1, 0);
+        const nextLastDay = new Date(year, month - 0 + 2, 0);
+        const daysInMonth = lastDay.getDate();
+        const daysInNextMonth = nextLastDay.getDate();
+        let firstDayOfWeek = firstDay.getDay();
+        const calendar = document.getElementById('calendar');
+        const calendarBody = document.createElement('tbody');
+        console.log(year, month, firstDayOfWeek, daysInMonth);
+        if (firstDayOfWeek == 0) {
+            firstDayOfWeek = firstDayOfWeek + 6;
+        } else {
+            firstDayOfWeek = firstDayOfWeek - 1;
+        }
+        let row = document.createElement('tr');
+        for (let i = 0; i < firstDayOfWeek; i++) {
+            const cell = document.createElement('td');
+            cell.innerHTML = '';
+            row.appendChild(cell);
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const cell = document.createElement('td');
+            let str = month - 0 + 1 + "-" + day;
+            cell.innerHTML = str;
+            if (leaves[str]) {
+                cell.className = 'leave';
+            }
+            if (startDate && str == (startDate.getMonth() + 1 + '-' + startDate.getDate())) {
+                cell.className = 'start';
+            }
+            cell.addEventListener('click', (e) => {
+                e.preventDefault();
+                showContextMenu(cell, e.pageX, e.pageY, day, month, year);
+            });
+            if ((day + firstDayOfWeek) % 7 === 1) {
+                calendarBody.appendChild(row);
+                row = document.createElement('tr');
+            }
+            row.appendChild(cell);
+        }
+        for (let day = 1; day <= daysInNextMonth; day++) {
+            const cell = document.createElement('td');
+            let str = month - 0 + 2 + "-" + day;
+            cell.innerHTML = str;
+            if (leaves[str]) {
+                cell.className = 'leave';
+            }
+            if (startDate && str == (startDate.getMonth() + 1 + '-' + startDate.getDate())) {
+                cell.className = 'start';
+            }
+            cell.style.backgroundColor = '#f2f2f2';
+            cell.addEventListener('click', (e) => {
+                e.preventDefault();
+                showContextMenu(cell, e.pageX, e.pageY, day, month + 1, year);
+            });
+            if ((day + firstDayOfWeek + daysInMonth) % 7 === 1) {
+                calendarBody.appendChild(row);
+                row = document.createElement('tr');
+            }
+            row.appendChild(cell);
+        }
+        calendarBody.appendChild(row);
+        calendar.innerHTML = '';
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headerRow.innerHTML = '<th>周一</th><th>周二</th><th>周三</th><th>周四</th><th>周五</th><th>周六</th><th>周日</th>';
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        table.appendChild(calendarBody);
+        calendar.appendChild(table);
+    }
+
+    function showContextMenu(cell, x, y, day, month, year) {
+        const menu = document.getElementById('contextMenu');
+        menu.style.left = `${x}px`;
+        menu.style.top = `${y}px`;
+        menu.style.display = 'block';
+        if (menuClick) {
+            menu.removeEventListener('click', menuClick);
+        }
+        menuClick = function (e) {
+            if (e.target.tagName === 'LI') {
+                const action = e.target.getAttribute('data-action');
+                //const cell = document.elementFromPoint(x, y);
+                if (cell) {
+                    cell.className = action;
+                    if (action == 'start') {
+                        saveStartDate(new Date(year, month, day));
+                    } else if (action == 'leave') {
+                        changeLeaves(month - 0 + 1 + '-' + day, false);
+                    } else if (action == 'unleave') {
+                        changeLeaves(month - 0 + 1 + '-' + day, true);
+                    }
+                }
+                menu.style.display = 'none';
+                calcDays();
+            }
+        }
+        menu.addEventListener('click', menuClick);
+    }
+
+    function calcDays() {
+        if (!startDate) {
+            return;
+        }
+        const today = new Date();
+        let leaveDays = Object.keys(leaves).length;
+        const diff = Math.ceil((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) - leaveDays;
+        const endDate = new Date(today.getTime() + (26 - diff) * (1000 * 60 * 60 * 24));
+        const firstDate = new Date(today.getTime() + (27 - diff) * (1000 * 60 * 60 * 24));
+        document.getElementById('days').innerHTML = `<span>从${formatDate(startDate)}(第一天)到${formatDate(today)}(包含)结束,请假${leaveDays}天,已工作: ${diff}, 最后一天:${formatDate(endDate)}，下个月第一天:${formatDate(firstDate)}</span>`;
+    }
+
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 月份是从0开始的
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day} `;
+    }
+
+
+    document.getElementById('monthSelect').addEventListener('change', () => {
+        currentMonth = document.getElementById('monthSelect').value;
+        generateCalendar();
+    });
+
+    generateCalendar();
+    calcDays();
+</script>
+
+</body>
+
+</html>

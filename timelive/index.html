@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十二时辰与人体经络养生</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin: 5px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #555;
+            margin: 5px;
+        }
+
+        .note {
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .note2 {
+            font-size: 1em;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h1 id="time" style="color: #5da312"></h1>
+    <h2 id="title"></h2>
+    <p id="meridian"></p>
+    <div class="note" id="advice"></div>
+    <div class="note2" style="display: none;" id="advice2"></div>
+    <div class="note2" style="display: none;" id="advice3"></div>
+</div>
+
+<script>
+    const meridians = [
+        {
+            title: '子时',
+            hour: '23-1',
+            meridian: '胆经',
+            advice: '此时应保持安静，避免剧烈活动。',
+            advice2: '子时一阳生，就是这个时辰人体的阳气开始。人睡觉的时候不可超过晚上11点，子时一定要睡觉，经常熬夜会造成失眠的症状!',
+            advice3: '子时胆经当令：子时一阳生，就是这个时辰人体的阳气开始，人睡觉的时候不可超过晚上11点，子时一定要睡觉，经常熬夜会造成失眠的症状!'
+        },
+        {
+            title: '丑时',
+            hour: '1-3',
+            meridian: '肝经',
+            advice: '肝脏排毒的最佳时期，宜静不宜动。',
+            advice2: '此时肝血充足，肝主筋。丑时一定要熟睡，要不然就养不起肝血，不能达到血润筋的目的!',
+            advice3: '丑时肝经当令：此时肝血，肝血，肝主筋!所谓筋，就是具有弹性的东西，人体的筋都与肝有关，如果筋的弹性没有了，是由血出的问题，血供给筋，筋才付有弹性!丑时一定要熟睡，要不然就养不起肝血，不能达到血润筋的目的!'
+        },
+        {
+            title: '寅时',
+            hour: '3-5',
+            meridian: '肺经',
+            advice: '早起呼吸新鲜空气，有助于肺部健康。',
+            advice2: '肺主气，寅时肺的工作是分配气血给其它脏器。这个时辰人要进入深度睡眠才可完成分配。心脏功能不好的人，心的气血分配不足的话，容易造成心梗。',
+            advice3: '寅时肺经当令：肺主气，寅时肺的工作是分配气血给其它脏器，心肝脾肺肾各需多少气血都由肺来分配，这个时辰人要进入深度睡眠才可完成分配，也就是人睡得特死的时候，在这段时间中如果醒过来是最不好的。举例说明：如果家中有心的老人，要劝他(她)尽量不做早锻炼，心脏功能不好的人，心的气血分配不足的话，容易造成心梗，那是非常危险的!'
+        },
+        {
+            title: '卯时',
+            hour: '5-7',
+            meridian: '大肠经',
+            advice: '适当运动，促进排便。',
+            advice2: '卯时大肠开始排，这个时辰人要顺其自然地进行大解。肺与大肠相表里，如果大肠出了问题，要从肺找原因。',
+            advice3: '卯时大肠经当令：卯时大肠开始排，这个时辰人要，一天当中此时是最顺其自然的时候，人要大解不需要你去刻意去控制，它自然而然的就在这个时辰当中进行。还有一点肺与大肠相表里，如果说大肠出了问题，也就是大解出了问题，要医治从肺找原因!'
+        },
+        {
+            title: '辰时',
+            hour: '7-9',
+            meridian: '胃经',
+            advice: '享用早餐，补充能量。',
+            advice2: '辰时胃开始活跃，要补充一些阴的东西，那就是食物。所以这个时辰当中人一定要吃东西，而且要吃好，要有丰富的营养。经常不吃早餐，会造成胃病。',
+            advice3: '辰时胃经当令：中上七点至点九点，胃开始活跃，从以上所讲述的子时阳所开始开始一直到辰时，阳气到达最旺的刻，要补充一些阴的东西，那就是食物，食物是的，所以这个时辰当中人一定要吃东西，而且要吃好，要有丰富的营养，最重要的是吃早餐是不会发胖的!经常不吃早餐，会造成胃病，更严重导致胃癌。再补充一点，胃经的外现是脸部，举个例子：通过观察，一些经常喜欢吃冷饮的人，脸是好长，也就是我们常说的青春痘，人体内部是一个恒温的环境，大量摄冷的食品，会慢慢造成胃寒，人体是具有自保功能的，会供成热了，攻这个寒，这个热供得越多，你会显得更渴，就更原意去喝冷饮，胃还会再供出更多的热量，这样久而久之就形成胃燥为，最终把这个为会显现在脸上，而形成。所认好长的朋友，不单只是关注脸部清洁，脸部手孔是不否被堵塞的问题，要从胃去找原因!十二时辰养生对照表脏腑经络走向。'
+        },
+        {
+            title: '巳时',
+            hour: '9-11',
+            meridian: '脾经',
+            advice: '工作或学习时注意休息，不要过度劳累。',
+            advice2: '脾主运化，脾和肺在中医里同属太阴。脾想对于肺来说是一个前期而初步的工作。脾主一身之肉，脾出了问题，会造成松驰，全身无力。思考过度，会伤了脾。',
+            advice3: '巳时脾经当令：脾主运化，脾和肺在中医里同属太阴，太阴就是分配，肺是分配全身的气血，而脾是把胃消化后的食物所变成的气血调出分配到人体的肉当中，脾想对于肺来说是一个前期而初步的工作。脾主一身之，脾出了问题，会造成松驰，全身无力。还有一个问题，脾在志为思，发达的人，头脑会很灵活，关联性会很强，不过一个人思考过度，会伤了，思伤脾。如果人身上出现了湿症，浮肿的病状，皆属脾的问题，从脾去治就可以了!'
+        },
+        {
+            title: '午时',
+            hour: '11-13',
+            meridian: '心经',
+            advice: '午餐后小憩片刻，有利于心脏保健。',
+            advice2: '午时一阴生，与子时阳气相对。通过睡觉就可以实现心肾相交来养中精神，下午的工作学习都有帮助。',
+            advice3: '午时心经当令：午时一阴生，这个时辰人体的开始，与子时阳气相对。五脏心肝脾肺肾与五行金木水火土有着对应关系，心属火、肝属木、脾属土、肺属金、肾属水，午时要达到心肾相交，让心火下去让肾水上来便到达心肾相交的状态，所谓心的，肾的为精，心肾相交的能力越强的人，这个人就显得特有精神!那么怎样才能心肾相交呢?通过睡觉就可以实现，所以午时要小睡一会儿，通过心肾相交来养中精神，下午的工作学习都有帮助!'
+        },
+        {
+            title: '未时',
+            hour: '13-15',
+            meridian: '小肠经',
+            advice: '适量饮水，帮助消化。',
+            advice2: '小肠主吸收，这个时辰小肠开始活跃。心与小肠相表里，有些人会出现胸闷的状况，可能是小肠出问题了，要注意对心的保护。',
+            advice3: '未时小肠经当令：小肠主吸收，这个时辰小肠开始活跃，小肠把胃腐熟的食物的精华通过吸收之后分配各个脏器，所以中饭要吃多吃好，这个好就是营养和口味要相对较高才可以!还有一点心与小肠想表里，一般在这个时辰，有些人会出现胸闷的状况，可能是小肠出问题了，要注意对心的保护!'
+        },
+        {
+            title: '申时',
+            hour: '15-17',
+            meridian: '膀胱经',
+            advice: '多喝水，促进代谢废物排出。',
+            advice2: '经是从人的后脑一直到脚的一条经脉，申时是记忆力最强、工作效率最高的时候。最要的一点，经存储唾沫，老是出现干燥的水从经去治就可以了。',
+            advice3: '申时经当令：经是从人的后脑一直到脚的一条经脉，这是一条可以上脑的经脉，申时是一天当中记忆力最好，工作效率最高的时候!肾与相表里，在的时候是靠肾的力量将从里输送出去。最要的一点，经存储，举个例子：好多人有干燥的现象，那是唾沫不中，唾沫的跟肾有关，因肾属水，肾水上不来就会出现干燥，而肾水又要靠阳气带动才可以上来，而阳气又是通过经输送的，所以老是出现干燥的水从经去排出就可以了!'
+        },
+        {
+            title: '酉时',
+            hour: '17-19',
+            meridian: '肾经',
+            advice: '可以进行一些轻松的活动，如散步。',
+            advice2: '肾主精，所谓精，就是相当于货币。如果有人在酉时发低烧，那就是肾精不足的表现。',
+            advice3: '酉时肾精当令：肾主精，肾的为精，所谓精，就是相当于货币，什么东西都可变现，精在人体里颇为重要，人体缺什么，都由精去变现出来，精是支持人体活动的最基本的物质!肾是**有创造性的，肾能造精，精能生物，如果肾气大伤，也就是损了精，比如过度，过频那都是损耗了精，常期无规律的大量的损耗肾精，容易衰老，对身体的危害是没有穷尽的!如果有人在酉时发低烧，那就是肾精不足的表现!中医五脏六腑的表里关系。'
+        },
+        {
+            title: '戌时',
+            hour: '19-21',
+            meridian: '心包经',
+            advice: '放松心情，准备晚餐。',
+            advice2: '戌时心包经当令，正盛，阳气将尽，喜乐出焉，也就是这个时候人应该去娱乐，这样才能使人在这个时候感觉心情舒畅。',
+            advice3: '戌时心包经当令：心包经当令，正盛，阳气将尽，喜乐出焉，也就是这个时候人应该去娱乐，这样才能使人在这个时候感觉心情舒畅!'
+        },
+        {
+            title: '亥时',
+            hour: '21-23',
+            meridian: '三焦经',
+            advice: '准备入睡，保证充足的睡眠。',
+            advice2: '亥时三焦经当令，所谓三焦，是上焦、中焦、下焦。有了前一个时辰戌时的欢娱，现在这个时辰便对情侣夫妻之间大有帮助。',
+            advice3: '亥时三焦经当令：所谓三焦，是上焦、中焦、下焦，上焦是主心肺;中焦是主脾胃;下焦是主肝肾，联系两两东西就是称三焦!最重要的一点，这个时辰是的**时期，有了前一个时辰戌时的欢娱，现在这个时辰便对情侣夫妻之间大有帮助的!'
+        }
+    ];
+
+    function updateContent() {
+        const now = new Date();
+        const hours = now.getHours();
+
+        // Find the correct meridian based on current time
+        let currentMeridian = meridians.find(m => {
+            const [start, end] = m.hour.split('-').map(Number);
+            if (end === 1 && hours === 0) return true; // Handle midnight transition
+            return (hours >= start && hours < end);
+        });
+
+        // If it's past the last interval, use the first one for the next day
+        if (!currentMeridian) {
+            currentMeridian = meridians[0];
+        }
+
+        document.getElementById('title').textContent = `当前时辰：${currentMeridian.title}(${currentMeridian.hour})`;
+        document.getElementById('meridian').innerHTML = `活跃经络：${currentMeridian.meridian} <a id="a1" style="color: #2477ff;cursor: pointer;" onclick="change_advice2()">详情</a>`;
+        document.getElementById('advice').innerHTML = `<strong>养生建议：</strong>${currentMeridian.advice}`;
+        document.getElementById('advice2').innerHTML = `<strong>注意事项：</strong>${currentMeridian.advice2}<a style="color: #2477ff;cursor: pointer;" onclick="change_advice3()">全文</a>`;
+        document.getElementById('advice3').innerHTML = `<strong>全文：</strong>${currentMeridian.advice3}`;
+    }
+
+    function change_advice2() {
+        let advice2 = document.getElementById('advice2');
+        let advice3 = document.getElementById('advice3');
+        if (advice2.style.display === 'none') {
+            if (advice3.style.display === 'none') {
+                advice2.style.display = 'block';
+                document.getElementById('a1').innerText = '关闭';
+            } else {
+                advice3.style.display = 'none';
+                document.getElementById('a1').innerText = '详情';
+            }
+        } else {
+            advice2.style.display = 'none';
+            document.getElementById('advice3').style.display = 'none';
+            document.getElementById('a1').innerText = '详情';
+        }
+    }
+
+    function change_advice3() {
+        let advice = document.getElementById('advice3');
+        if (advice.style.display === 'none') {
+            advice.style.display = 'block';
+            document.getElementById('advice2').style.display = 'none';
+            document.getElementById('a1').innerText = '关闭';
+        } else {
+            advice.style.display = 'none';
+        }
+    }
+
+    function getNowTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        let color = 'green';
+        if (hours >= 23 || hours < 5) {
+            color = 'red';
+        }
+        if (hours < 10) {
+            hours = '0' + hours;
+        }
+        let minutes = now.getMinutes();
+        if (minutes < 10) {
+            minutes = '0' + minutes;
+        }
+        let seconds = now.getSeconds();
+        if (seconds < 10) {
+            seconds = '0' + seconds;
+        }
+        return `<font color=${color}>${hours}:${minutes}:${seconds}</font>`;
+    }
+
+    // Initial load and update every minute
+    updateContent();
+    setInterval(updateContent, 60 * 1000);
+    // Update time every second
+    setInterval(() => {
+        document.getElementById('time').innerHTML = getNowTime();
+    }, 1000);
+</script>
+
+</body>
+</html>
